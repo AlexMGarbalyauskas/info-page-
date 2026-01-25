@@ -132,6 +132,47 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
+/* Hero Highlights Section */
+.hero-highlights {
+    padding: 60px 0;
+    background: #f9f9f9;
+}
+
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.highlight-card {
+    background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    padding: 3.5rem 2.5rem;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 30px rgba(17, 153, 142, 0.2);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.highlight-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(17, 153, 142, 0.35);
+}
+
+.highlight-card h3 {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    font-weight: 700;
+}
+
+.highlight-card p {
+    font-size: 1.2rem;
+    opacity: 0.95;
+    line-height: 1.6;
+}
+
 /* Features Section */
 .features {
     padding: 80px 0;
@@ -141,7 +182,7 @@ body {
 .section-title {
     text-align: center;
     font-size: 2.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1rem;
     color: #333;
     position: relative;
 }
@@ -154,6 +195,15 @@ body {
     background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
     margin: 15px auto 0;
     border-radius: 2px;
+}
+
+.section-subtitle {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #666;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+    line-height: 1.6;
 }
 
 .features-grid {
