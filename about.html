@@ -16,6 +16,7 @@
             <div class="nav-links">
                 <a href="index.html">Home</a>
                 <a href="about.html">About</a>
+                <a href="technical.html">Technical Docs</a>
                 <a href="contact.html">Contact</a>
                 <a href="https://stay-fit-2.onrender.com/" target="_blank">Launch App</a>
             </div>
@@ -25,41 +26,84 @@
     <section class="page-hero">
         <div class="container">
             <h1>About Stay Fit</h1>
-            <p>Learn more about our mission and the team behind this project</p>
+            <p>A concise overview of the mission, build, and impact of the project</p>
         </div>
     </section>
 
     <section class="about-detailed">
         <div class="container">
+            <div class="project-overview">
+                <h2 class="section-title">Project Overview</h2>
+                <p class="overview-intro">Stay Fit is a <strong>full-stack social fitness web application</strong> built as a final year project to showcase advanced software engineering while solving a real-world wellness challenge: consistent, social, and motivating daily exercise.</p>
+            </div>
+
             <div class="about-grid">
                 <div class="about-block">
-                    <h2>Our Mission</h2>
-                    <p>Stay Fit aims to revolutionize the way people approach fitness by combining daily video challenges, social engagement, and gamification. We believe fitness should be fun, accessible, and community-driven.</p>
+                    <h2>The Problem</h2>
+                    <p>Traditional fitness apps suffer from poor user engagement due to overwhelming complexity, lack of social interaction, and absence of daily motivation. Users download fitness apps but abandon them within weeks due to monotonous routines and isolation.</p>
+                    <p><strong>Market Gap:</strong> Need for a simple, social-first fitness platform that makes daily exercise fun and community-driven.</p>
                 </div>
 
                 <div class="about-block">
-                    <h2>The Problem We Solve</h2>
-                    <p>Traditional fitness apps often lack engagement and fail to maintain user motivation. Stay Fit addresses this by introducing daily challenges, social features, and a supportive community that keeps users coming back.</p>
+                    <h2>The Solution</h2>
+                    <p>Stay Fit transforms fitness into a social experience using short video challenges (30-60 seconds), real-time global feeds, and daily notifications. Users see others completing the same challenges worldwide, building accountability and community.</p>
+                    <p><strong>Key Innovation:</strong> Fitness that works anywhere, with no equipment or gym membership required.</p>
                 </div>
 
                 <div class="about-block">
-                    <h2>Our Approach</h2>
-                    <p>Through carefully curated daily fitness video challenges, users can track their progress, engage with friends, and earn rewards. The app adapts to individual fitness levels while maintaining a social and competitive edge.</p>
+                    <h2>How It Was Built</h2>
+                    <p><strong>Frontend:</strong> React v19 SPA with React Router, Context API, and Tailwind CSS for responsive, mobile-first design.</p>
+                    <p><strong>Backend:</strong> Node.js + Express REST API with Socket.IO for real-time features, Multer for file uploads, and Passport for OAuth.</p>
+                    <p><strong>Database:</strong> SQLite with custom migration system managing users, posts, messages, friendships, and workout schedules.</p>
                 </div>
 
                 <div class="about-block">
-                    <h2>Technology Stack</h2>
-                    <p>Built using React JS for a seamless user experience and SQLite for efficient data management, Stay Fit leverages modern web technologies to deliver a fast, responsive, and reliable platform.</p>
+                    <h2>Security Features</h2>
+                    <p><strong>Authentication:</strong> Multi-factor authentication with JWT tokens and Google OAuth 2.0 integration.</p>
+                    <p><strong>Encryption:</strong> End-to-end message encryption using Web Crypto API (AES-GCM 256-bit) with PBKDF2 key derivation.</p>
+                    <p><strong>Protection:</strong> bcrypt password hashing, Helmet security headers, CORS whitelist, and parameterized SQL queries.</p>
                 </div>
 
                 <div class="about-block">
-                    <h2>Final Year Project</h2>
-                    <p>This application is developed as a comprehensive final year project, demonstrating full-stack development capabilities, user experience design, and modern software engineering practices.</p>
+                    <h2>Real-Time Features</h2>
+                    <p><strong>WebSocket Communication:</strong> Socket.IO v4 powers instant messaging, real-time notifications, message reactions, and live feed updates.</p>
+                    <p><strong>User Experience:</strong> Typing indicators, read receipts, emoji reactions, and instant notification delivery create an engaging, responsive platform.</p>
                 </div>
 
                 <div class="about-block">
-                    <h2>Future Vision</h2>
-                    <p>We plan to expand Stay Fit with personalized workout plans, nutrition tracking, advanced analytics, and integration with wearable devices to provide a complete health and fitness ecosystem.</p>
+                    <h2>Deployment</h2>
+                    <p><strong>Platform:</strong> Render.com cloud hosting with automatic deployments from Git repository.</p>
+                    <p><strong>Infrastructure:</strong> Separate frontend (static site) and backend (web service) with environment variables, database persistence, and CDN distribution.</p>
+                </div>
+
+                <div class="about-block">
+                    <h2>Learning Outcomes</h2>
+                    <ul class="features-list">
+                        <li>Mastered full-stack development from database to deployment</li>
+                        <li>Implemented secure authentication and encryption systems</li>
+                        <li>Built real-time features with WebSocket technology</li>
+                        <li>Designed a normalized database schema with migrations</li>
+                        <li>Created responsive, accessible user interfaces</li>
+                        <li>Deployed a production application to the cloud</li>
+                    </ul>
+                </div>
+
+                <div class="about-block">
+                    <h2>Key Features</h2>
+                    <ul class="features-list">
+                        <li><strong>Social Networking:</strong> Friend requests, profiles, post sharing, comments, likes, and saves</li>
+                        <li><strong>Messaging:</strong> Encrypted direct messages, GIF support, reactions, and group conversations</li>
+                        <li><strong>Fitness Tracking:</strong> Workout calendar, reminders, progress analytics, and achievement badges</li>
+                        <li><strong>Internationalization:</strong> Multi-language support with a custom translation system</li>
+                    </ul>
+                </div>
+
+                <div class="about-block">
+                    <h2>Future Enhancements</h2>
+                    <ul class="features-list">
+                        <li><strong>Planned:</strong> Video calls (WebRTC), AI workout recommendations, fitness tracker integrations, group messaging, stories</li>
+                        <li><strong>Technical:</strong> PostgreSQL/MongoDB migration, Redis caching, CDN for media, microservices, GraphQL API</li>
+                    </ul>
                 </div>
             </div>
 
@@ -69,30 +113,74 @@
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>Research & Planning</h3>
-                            <p>Conducted market research, identified user needs, and designed the application architecture.</p>
+                            <h3>Phase 1: Research & Planning (Weeks 1-2)</h3>
+                            <p>Conducted market research on fitness app engagement, identified pain points in existing solutions, and designed the full-stack architecture. Created ERD diagrams, API specifications, and component hierarchy.</p>
                         </div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>Design & Prototyping</h3>
-                            <p>Created wireframes, user flows, and interactive prototypes to validate the concept.</p>
+                            <h3>Phase 2: Database & Backend Setup (Weeks 3-4)</h3>
+                            <p>Designed normalized SQLite schema with 10+ tables, created migration system, built Express REST API with authentication middleware, and implemented JWT + OAuth security layer.</p>
                         </div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>Development</h3>
-                            <p>Built the application using React JS and SQLite, implementing core features and functionalities.</p>
+                            <h3>Phase 3: Frontend Development (Weeks 5-8)</h3>
+                            <p>Built React SPA with routing, created reusable components, implemented Context API for state management, integrated Tailwind CSS, and developed responsive mobile-first UI.</p>
                         </div>
                     </div>
                     <div class="timeline-item">
                         <div class="timeline-dot"></div>
                         <div class="timeline-content">
-                            <h3>Testing & Launch</h3>
-                            <p>Conducted thorough testing, gathered user feedback, and deployed to production.</p>
+                            <h3>Phase 4: Real-Time Features (Weeks 9-10)</h3>
+                            <p>Integrated Socket.IO for WebSocket communication, implemented instant messaging with end-to-end encryption (AES-GCM), added real-time notifications, and created message reactions system.</p>
                         </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Phase 5: Advanced Features (Weeks 11-12)</h3>
+                            <p>Added file upload system with Multer, implemented workout calendar with reminders, created internationalization system, integrated Google OAuth, and added dark mode support.</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <h3>Phase 6: Testing & Deployment (Weeks 13-14)</h3>
+                            <p>Conducted unit and integration testing with Jest, deployed to Render.com cloud platform, configured CI/CD pipeline, optimized performance, and launched production version.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tech-stats">
+                <h2 class="section-title">Project Statistics</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number">14</div>
+                        <div class="stat-label">Weeks of Development</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">10+</div>
+                        <div class="stat-label">Database Tables</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">20+</div>
+                        <div class="stat-label">REST API Endpoints</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">30+</div>
+                        <div class="stat-label">React Components</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Full-Stack</div>
+                        <div class="stat-label">Architecture Type</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">Real-Time</div>
+                        <div class="stat-label">WebSocket Features</div>
                     </div>
                 </div>
             </div>
@@ -106,7 +194,7 @@
                     <h3>Stay Fit</h3>
                     <p>Making fitness fun, social, and accessible for everyone.</p>
                     <div class="social-links">
-                        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
+                        <a href="https://github.com/AlexMGarbalyauskas/Stay-Fit" target="_blank" rel="noopener noreferrer" class="social-icon" title="GitHub">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24">
                                 <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
                             </svg>
@@ -129,6 +217,7 @@
                     <ul class="footer-menu">
                         <li><a href="index.html">Home</a></li>
                         <li><a href="about.html">About Us</a></li>
+                        <li><a href="technical.html">Technical Docs</a></li>
                         <li><a href="contact.html">Contact</a></li>
                         <li><a href="https://stay-fit-2.onrender.com/" target="_blank">Web App</a></li>
                     </ul>

@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Technical Documentation - Stay Fit</title>
+    <link rel="icon" type="image/png" href="logofit.png">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">
+                <img src="logofit.png" alt="Stay Fit Logo" style="height: 50px; width: auto;">
+            </div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="about.html">About</a>
+                <a href="technical.html">Technical Docs</a>
+                <a href="contact.html">Contact</a>
+                <a href="https://stay-fit-2.onrender.com/" target="_blank">Launch App</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="page-hero">
+        <div class="container">
+            <h1>Technical Documentation</h1>
+            <p>Comprehensive technical overview of the Stay Fit platform architecture, implementation, and technologies</p>
+        </div>
+    </section>
+
+    <section class="tech-documentation">
+        <div class="container">
+            <!-- Architecture Overview -->
+            <div class="doc-section">
+                <h2 class="doc-title">System Architecture</h2>
+                <p class="doc-intro">Stay Fit follows a modern full-stack architecture with clear separation between frontend presentation, backend business logic, database persistence, and real-time communication layers.</p>
+                
+                <div class="architecture-diagram">
+                    <div class="arch-layer">
+                        <h3>Frontend Layer</h3>
+                        <p><strong>React v19.2.1 SPA</strong></p>
+                        <ul>
+                            <li>React Router DOM v7 for client-side routing</li>
+                            <li>Context API for global state management</li>
+                            <li>Tailwind CSS v3 for styling</li>
+                            <li>Axios for HTTP requests</li>
+                            <li>Socket.IO Client for WebSocket connections</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <h3>Backend Layer</h3>
+                        <p><strong>Node.js + Express v5</strong></p>
+                        <ul>
+                            <li>RESTful API with modular route handlers</li>
+                            <li>JWT & OAuth 2.0 authentication middleware</li>
+                            <li>Multer for file upload handling</li>
+                            <li>Helmet for security headers</li>
+                            <li>Socket.IO Server for real-time features</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <h3>Database Layer</h3>
+                        <p><strong>SQLite3</strong></p>
+                        <ul>
+                            <li>File-based relational database (data.sqlite)</li>
+                            <li>Custom migration system for schema evolution</li>
+                            <li>10+ normalized tables for data integrity</li>
+                            <li>ACID compliance for transaction safety</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="arch-layer">
+                        <h3>Deployment Layer</h3>
+                        <p><strong>Render.com Cloud Platform</strong></p>
+                        <ul>
+                            <li>Frontend: Static site with CDN distribution</li>
+                            <li>Backend: Web service with auto-scaling</li>
+                            <li>Environment variable configuration</li>
+                            <li>Automatic deployments from Git</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Database Schema -->
+            <div class="doc-section">
+                <h2 class="doc-title">Database Design</h2>
+                <p class="doc-intro">The database schema is normalized to Third Normal Form (3NF) to ensure data integrity and minimize redundancy.</p>
+                
+                <div class="db-tables">
+                    <div class="db-table-card">
+                        <h3>Users Table</h3>
+                        <code>
+                            id (PRIMARY KEY, AUTO INCREMENT)<br>
+                            username (UNIQUE, NOT NULL)<br>
+                            email (UNIQUE, NOT NULL)<br>
+                            password_hash (bcrypt hashed)<br>
+                            profile_picture, bio, location, nickname<br>
+                            created_at (TIMESTAMP)
+                        </code>
+                        <p><strong>Purpose:</strong> Core user authentication and profile information</p>
+                    </div>
+                    
+                    <div class="db-table-card">
+                        <h3>Posts Table</h3>
+                        <code>
+                            id (PRIMARY KEY)<br>
+                            user_id (FOREIGN KEY → users.id)<br>
+                            content (TEXT)<br>
+                            media_url, video_url<br>
+                            created_at (TIMESTAMP)
+                        </code>
+                        <p><strong>Purpose:</strong> User-generated workout posts with media support</p>
+                    </div>
+                    
+                    <div class="db-table-card">
+                        <h3>Messages Table</h3>
+                        <code>
+                            id (PRIMARY KEY)<br>
+                            sender_id, receiver_id (FOREIGN KEYS)<br>
+                            encrypted_content (TEXT)<br>
+                            iv (Initialization Vector)<br>
+                            is_encrypted (BOOLEAN)<br>
+                            created_at (TIMESTAMP)
+                        </code>
+                        <p><strong>Purpose:</strong> End-to-end encrypted direct messaging</p>
+                    </div>
+                    
+                    <div class="db-table-card">
+                        <h3>Friends Table</h3>
+                        <code>
+                            id (PRIMARY KEY)<br>
+                            user_id, friend_id (FOREIGN KEYS)<br>
+                            created_at (TIMESTAMP)<br>
+                            UNIQUE(user_id, friend_id)
+                        </code>
+                        <p><strong>Purpose:</strong> Many-to-many user relationships</p>
+                    </div>
+
+                    <div class="db-table-card">
+                        <h3>Workout Schedules</h3>
+                        <code>
+                            id (PRIMARY KEY)<br>
+                            user_id (FOREIGN KEY)<br>
+                            title, description<br>
+                            scheduled_time (DATETIME)<br>
+                            timezone<br>
+                            created_at (TIMESTAMP)
+                        </code>
+                        <p><strong>Purpose:</strong> User workout planning and calendar integration</p>
+                    </div>
+
+                    <div class="db-table-card">
+                        <h3>Additional Tables</h3>
+                        <p><strong>comments:</strong> Nested comment system with reply support</p>
+                        <p><strong>likes:</strong> Post engagement tracking</p>
+                        <p><strong>saves:</strong> Saved posts functionality</p>
+                        <p><strong>friend_requests:</strong> Pending/accepted friend requests</p>
+                        <p><strong>notifications:</strong> User notification system</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Authentication & Security -->
+            <div class="doc-section">
+                <h2 class="doc-title">Authentication & Security</h2>
+                
+                <div class="security-feature">
+                    <h3>1. Multi-Factor Authentication</h3>
+                    <div class="auth-method">
+                        <h4>Local Authentication (JWT)</h4>
+                        <ul>
+                            <li><strong>Password Hashing:</strong> bcrypt with automatic salting (10 rounds)</li>
+                            <li><strong>Token Generation:</strong> jsonwebtoken library with HS256 algorithm</li>
+                            <li><strong>Token Storage:</strong> localStorage on client, verified on each request</li>
+                            <li><strong>Payload:</strong> { id, username, email } with configurable expiration</li>
+                        </ul>
+                        <div class="code-block">
+                            <strong>Authentication Flow:</strong><br>
+                            1. User registers → Password hashed with bcrypt<br>
+                            2. User logs in → Credentials verified against hash<br>
+                            3. JWT token generated with user payload<br>
+                            4. Token sent in Authorization header (Bearer token)<br>
+                            5. Middleware validates token on protected routes
+                        </div>
+                    </div>
+                    
+                    <div class="auth-method">
+                        <h4>Google OAuth 2.0</h4>
+                        <ul>
+                            <li><strong>Library:</strong> passport-google-oauth20 strategy</li>
+                            <li><strong>Client Integration:</strong> @react-oauth/google React component</li>
+                            <li><strong>Scopes:</strong> profile, email</li>
+                            <li><strong>Flow:</strong> Authorization code exchange for user profile</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="security-feature">
+                    <h3>2. End-to-End Message Encryption</h3>
+                    <ul>
+                        <li><strong>Algorithm:</strong> AES-GCM (Galois/Counter Mode) 256-bit</li>
+                        <li><strong>Key Derivation:</strong> PBKDF2 with 100,000 iterations</li>
+                        <li><strong>IV:</strong> 96-bit random initialization vector per message</li>
+                        <li><strong>Storage:</strong> Encrypted content + IV in Base64 encoding</li>
+                    </ul>
+                    <div class="code-block">
+                        <strong>Encryption Flow:</strong><br>
+                        1. Derive conversation key from user IDs (deterministic)<br>
+                        2. Generate random IV for each message<br>
+                        3. Encrypt plaintext using AES-GCM<br>
+                        4. Store encrypted content + IV in database<br>
+                        5. Recipient decrypts with same derived key + IV
+                    </div>
+                </div>
+
+                <div class="security-feature">
+                    <h3>3. Additional Security Measures</h3>
+                    <ul>
+                        <li><strong>Helmet.js:</strong> Security headers (CSP, XSS protection, etc.)</li>
+                        <li><strong>CORS:</strong> Whitelist of allowed origins</li>
+                        <li><strong>SQL Injection:</strong> Parameterized queries with sqlite3</li>
+                        <li><strong>File Upload:</strong> Type validation, size limits, UUID filenames</li>
+                        <li><strong>Session Security:</strong> express-session with secure cookies</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Backend API -->
+            <div class="doc-section">
+                <h2 class="doc-title">Backend API Structure</h2>
+                
+                <div class="api-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Endpoint</th>
+                                <th>Method</th>
+                                <th>Purpose</th>
+                                <th>Authentication</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/api/auth/register</td>
+                                <td>POST</td>
+                                <td>User registration</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td>/api/auth/login</td>
+                                <td>POST</td>
+                                <td>User login</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td>/api/auth/google</td>
+                                <td>GET</td>
+                                <td>OAuth initiation</td>
+                                <td>Public</td>
+                            </tr>
+                            <tr>
+                                <td>/api/me</td>
+                                <td>GET</td>
+                                <td>Current user profile</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/posts</td>
+                                <td>GET/POST</td>
+                                <td>List/create posts</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/posts/:id/like</td>
+                                <td>POST</td>
+                                <td>Like a post</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/posts/:id/comment</td>
+                                <td>POST</td>
+                                <td>Add comment</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/friends</td>
+                                <td>GET</td>
+                                <td>List friends</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/friends/request</td>
+                                <td>POST</td>
+                                <td>Send friend request</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/messages/:userId</td>
+                                <td>GET</td>
+                                <td>Conversation history</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/workout-schedules</td>
+                                <td>GET/POST</td>
+                                <td>Manage workouts</td>
+                                <td>JWT Required</td>
+                            </tr>
+                            <tr>
+                                <td>/api/notifications</td>
+                                <td>GET</td>
+                                <td>User notifications</td>
+                                <td>JWT Required</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Real-Time Communication -->
+            <div class="doc-section">
+                <h2 class="doc-title">Real-Time Communication</h2>
+                <p class="doc-intro">Socket.IO v4.8.1 enables bidirectional event-based communication between clients and server.</p>
+                
+                <div class="socket-features">
+                    <div class="socket-feature">
+                        <h3>Connection Management</h3>
+                        <ul>
+                            <li><strong>Authentication:</strong> JWT token in socket handshake</li>
+                            <li><strong>User Rooms:</strong> Each user joins room: user:${userId}</li>
+                            <li><strong>Resilience:</strong> Automatic reconnection with exponential backoff</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="socket-feature">
+                        <h3>Events & Payloads</h3>
+                        <div class="code-block">
+                            <strong>send_message</strong> (Client → Server)<br>
+                            { senderId, receiverId, content, encrypted, iv, isEncrypted, messageType, mediaUrl }
+                            <br><br>
+                            <strong>receive_message</strong> (Server → Client)<br>
+                            { messageId, senderId, content, encrypted, iv, createdAt }
+                            <br><br>
+                            <strong>notification</strong> (Server → Client)<br>
+                            { type, message, fromUser, postId, createdAt }
+                            <br><br>
+                            <strong>add_reaction</strong> (Client → Server)<br>
+                            { messageId, emoji }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Frontend Architecture -->
+            <div class="doc-section">
+                <h2 class="doc-title">Frontend Architecture</h2>
+                
+                <div class="frontend-structure">
+                    <h3>Project Structure</h3>
+                    <div class="code-block">
+                        frontend/src/<br>
+                        ├── pages/ (Route-level components)<br>
+                        │   ├── Login.js, Register.js<br>
+                        │   ├── Home.js, Profile.js<br>
+                        │   ├── ChatPage.js, Calendar.js<br>
+                        │   └── Settings.js, Notifications.js<br>
+                        ├── components/ (Reusable UI)<br>
+                        │   ├── Header.js, Navbar.js<br>
+                        │   ├── ProfileHeader.js<br>
+                        │   ├── CommentsModal.js<br>
+                        │   └── EmojiPickerModal.js<br>
+                        ├── context/ (Global state)<br>
+                        │   ├── LanguageContext.js<br>
+                        │   └── WorkoutReminderContext.js<br>
+                        ├── utils/<br>
+                        │   ├── crypto.js (Encryption)<br>
+                        │   ├── api.js (Axios instance)<br>
+                        │   └── translations.js<br>
+                        └── App.js (Root component)
+                    </div>
+                </div>
+
+                <div class="frontend-features">
+                    <h3>Key Libraries & Purpose</h3>
+                    <ul>
+                        <li><strong>react-router-dom v7:</strong> Client-side routing with dynamic parameters</li>
+                        <li><strong>axios v1.13:</strong> HTTP client with interceptors for auth headers</li>
+                        <li><strong>socket.io-client v4:</strong> WebSocket client for real-time features</li>
+                        <li><strong>tailwindcss v3:</strong> Utility-first CSS with custom theme</li>
+                        <li><strong>@react-oauth/google:</strong> Google Sign-In integration</li>
+                        <li><strong>emoji-picker-react:</strong> Emoji selection component</li>
+                        <li><strong>dayjs:</strong> Lightweight date/time manipulation</li>
+                        <li><strong>lucide-react:</strong> Modern icon library</li>
+                        <li><strong>qrcode.react:</strong> QR code generation</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Development Workflow -->
+            <div class="doc-section">
+                <h2 class="doc-title">Development & Deployment</h2>
+                
+                <div class="workflow-section">
+                    <h3>Local Development</h3>
+                    <div class="code-block">
+                        <strong>Backend:</strong><br>
+                        cd backend<br>
+                        npm install<br>
+                        npm start  # Runs on http://localhost:5000<br><br>
+                        
+                        <strong>Frontend:</strong><br>
+                        cd frontend<br>
+                        npm install<br>
+                        npm start  # Runs on http://localhost:3000
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h3>Database Migrations</h3>
+                    <div class="code-block">
+                        node run-migration.js  # Applies pending migrations<br>
+                        Migrations are idempotent SQL scripts in backend/migrations/
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h3>Production Build</h3>
+                    <div class="code-block">
+                        <strong>Frontend Build:</strong><br>
+                        npm run build<br>
+                        ├── Static asset optimization<br>
+                        ├── Code minification & tree-shaking<br>
+                        ├── Bundle splitting for performance<br>
+                        └── Output: build/ directory<br><br>
+                        
+                        <strong>Backend:</strong> No build step (Node.js executes directly)
+                    </div>
+                </div>
+
+                <div class="workflow-section">
+                    <h3>Deployment Configuration</h3>
+                    <p><strong>Platform:</strong> Render.com with automatic Git deployment</p>
+                    <p><strong>Frontend:</strong> Static site served from build/ directory</p>
+                    <p><strong>Backend:</strong> Web service with environment variables</p>
+                    <div class="code-block">
+                        <strong>Environment Variables:</strong><br>
+                        DATABASE_FILE=./data.sqlite<br>
+                        JWT_SECRET=your_secret_key<br>
+                        GOOGLE_CLIENT_ID=oauth_client_id<br>
+                        GOOGLE_CLIENT_SECRET=oauth_client_secret<br>
+                        PORT=5000<br>
+                        REACT_APP_API_BASE=https://backend-url.onrender.com
+                    </div>
+                </div>
+            </div>
+
+            <!-- Performance & Best Practices -->
+            <div class="doc-section">
+                <h2 class="doc-title">Performance Optimizations</h2>
+                
+                <div class="performance-grid">
+                    <div class="perf-card">
+                        <h3>Frontend</h3>
+                        <ul>
+                            <li>Code splitting with React.lazy()</li>
+                            <li>Image lazy loading</li>
+                            <li>Debounced search inputs</li>
+                            <li>Pagination on feeds</li>
+                            <li>Service worker caching (PWA)</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="perf-card">
+                        <h3>Backend</h3>
+                        <ul>
+                            <li>Database indexing (unique constraints)</li>
+                            <li>Efficient JOIN queries</li>
+                            <li>Limited result sets with LIMIT</li>
+                            <li>Static file caching</li>
+                            <li>Helmet security headers</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="perf-card">
+                        <h3>Database</h3>
+                        <ul>
+                            <li>Indexed columns: username, email</li>
+                            <li>Unique constraints for fast lookups</li>
+                            <li>Normalized schema (3NF)</li>
+                            <li>Transaction batching</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Choices -->
+            <div class="doc-section">
+                <h2 class="doc-title">Technology Rationale</h2>
+                
+                <div class="rationale-grid">
+                    <div class="rationale-card">
+                        <h3>Why React?</h3>
+                        <ul>
+                            <li>Component-based architecture for reusability</li>
+                            <li>Virtual DOM for optimal performance</li>
+                            <li>Large ecosystem and community support</li>
+                            <li>Easy to learn and maintain</li>
+                            <li>Industry-standard for SPAs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rationale-card">
+                        <h3>Why Express?</h3>
+                        <ul>
+                            <li>Minimalist and flexible framework</li>
+                            <li>Powerful middleware system</li>
+                            <li>Large plugin ecosystem</li>
+                            <li>Industry standard for Node.js APIs</li>
+                            <li>Easy integration with Socket.IO</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rationale-card">
+                        <h3>Why SQLite?</h3>
+                        <ul>
+                            <li>Zero configuration required</li>
+                            <li>Portable single-file database</li>
+                            <li>Sufficient for project scale</li>
+                            <li>Easy to version control</li>
+                            <li>ACID compliant</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rationale-card">
+                        <h3>Why Socket.IO?</h3>
+                        <ul>
+                            <li>Real-time bidirectional communication</li>
+                            <li>Automatic reconnection handling</li>
+                            <li>Fallback to HTTP long-polling</li>
+                            <li>Easy integration with Express</li>
+                            <li>Room-based broadcasting</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="rationale-card">
+                        <h3>Why Tailwind CSS?</h3>
+                        <ul>
+                            <li>Utility-first approach</li>
+                            <li>Consistent design system</li>
+                            <li>No CSS naming conflicts</li>
+                            <li>Easy dark mode implementation</li>
+                            <li>Rapid prototyping</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project Stats -->
+            <div class="doc-section">
+                <h2 class="doc-title">Project Summary</h2>
+                <div class="project-summary">
+                    <p><strong>Project Type:</strong> Full-Stack Social Fitness Web Application</p>
+                    <p><strong>Development Period:</strong> 14 Weeks (January 2026)</p>
+                    <p><strong>Lines of Code:</strong> 15,000+ (Frontend + Backend)</p>
+                    <p><strong>Database Tables:</strong> 10+</p>
+                    <p><strong>API Endpoints:</strong> 20+</p>
+                    <p><strong>React Components:</strong> 30+</p>
+                    <p><strong>Real-Time Events:</strong> 8+ Socket.IO events</p>
+                    <p><strong>Deployment:</strong> Render.com cloud platform</p>
+                    <p><strong>Status:</strong> Production-ready and deployed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-advanced">
+                <div class="footer-section">
+                    <h3>Stay Fit</h3>
+                    <p>Making fitness fun, social, and accessible for everyone.</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-menu">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="technical.html">Technical Docs</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="https://stay-fit-2.onrender.com/" target="_blank">Web App</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-menu">
+                        <li><a href="index.html#features">Features</a></li>
+                        <li><a href="index.html#tech">Technology</a></li>
+                        <li><a href="https://stay-fit-2.onrender.com/download" target="_blank">Download</a></li>
+                        <li><a href="technical.html">Documentation</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul class="footer-menu">
+                        <li><a href="contact.html">Get Help</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-divider"></div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Stay Fit - A Final Year Project</p>
+                <p>Built with React JS & SQLite | Making Fitness Fun & Social</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
