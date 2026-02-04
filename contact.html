@@ -6,6 +6,27 @@
     <title>Contact - Stay Fit</title>
     <link rel="icon" type="image/png" href="logofit.png">
     <link rel="stylesheet" href="styles.css">
+    <style>
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -60%);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%);
+            }
+        }
+        
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+            }
+            to {
+                opacity: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="navbar">
@@ -40,7 +61,7 @@
                     <div class="contact-item">
                         <div>
                             <h3>Email</h3>
-                            <p>stayfit@project.com</p>
+                            <p><a href="mailto:stayfitalways8@gmail.com">stayfitalways8@gmail.com</a></p>
                         </div>
                     </div>
 
@@ -77,7 +98,7 @@
 
                 <div class="contact-form-container">
                     <h2>Send Us a Message</h2>
-                    <form class="contact-form" action="#" method="POST">
+                    <form class="contact-form" id="contactForm">
                         <div class="form-group">
                             <label for="name">Full Name</label>
                             <input type="text" id="name" name="name" required placeholder="Enter your name">
@@ -106,6 +127,15 @@
                         </button>
                     </form>
                 </div>
+                
+                <!-- Success/Error Messages - Fixed Position Popup -->
+                <div id="successMessage" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 30px 50px; background-color: #4CAF50; color: white; border-radius: 10px; text-align: center; font-weight: bold; font-size: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; animation: slideIn 0.3s ease-out;">
+                    ✓ Email sent successfully! We'll get back to you soon.
+                </div>
+                <div id="errorMessage" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); padding: 30px 50px; background-color: #f44336; color: white; border-radius: 10px; text-align: center; font-weight: bold; font-size: 18px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); z-index: 9999; animation: slideIn 0.3s ease-out;">
+                    ✗ Failed to send email. Please try again.
+                </div>
+            </div>
             </div>
         </div>
     </section>
@@ -169,5 +199,59 @@
             </div>
         </div>
     </footer>
+
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script type="text/javascript">
+        // Initialize EmailJS with your public key
+        emailjs.init('tZQcLFKdJf8Mt7d_l');
+    </script>
+
+    <script>
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('successMessage');
+        const errorMessage = document.getElementById('errorMessage');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Send email using EmailJS
+            emailjs.sendForm('service_e4cka9o', 'template_zirz4rj', form)
+                .then(function(response) {
+                    console.log('SUCCESS!', response.status, response.text);
+                    
+                    // Show success message with animation
+                    successMessage.style.display = 'block';
+                    successMessage.style.animation = 'slideIn 0.3s ease-out';
+                    errorMessage.style.display = 'none';
+                    
+                    // Reset form
+                    form.reset();
+                    
+                    // Fade out and hide success message after 4 seconds
+                    setTimeout(function() {
+                        successMessage.style.animation = 'fadeOut 0.5s ease-out';
+                        setTimeout(function() {
+                            successMessage.style.display = 'none';
+                        }, 500);
+                    }, 4000);
+                }, function(error) {
+                    console.log('FAILED...', error);
+                    
+                    // Show error message with animation
+                    errorMessage.style.display = 'block';
+                    errorMessage.style.animation = 'slideIn 0.3s ease-out';
+                    successMessage.style.display = 'none';
+                    
+                    // Fade out and hide error message after 4 seconds
+                    setTimeout(function() {
+                        errorMessage.style.animation = 'fadeOut 0.5s ease-out';
+                        setTimeout(function() {
+                            errorMessage.style.display = 'none';
+                        }, 500);
+                    }, 4000);
+                });
+        });
+    </script>
 </body>
 </html>
